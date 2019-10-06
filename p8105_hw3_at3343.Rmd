@@ -57,11 +57,9 @@ instacart %>%
   summarize(n = n()) %>% 
   mutate(product_rank = min_rank(desc(n))) %>% 
   filter(product_rank <= 3) %>% 
-  view()
-
+  arrange(aisle, product_rank) %>% 
+knitr::kable()
 ```
-
-3 aisles = 31,339 items
 
 
 
