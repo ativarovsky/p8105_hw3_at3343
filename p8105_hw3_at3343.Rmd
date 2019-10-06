@@ -5,7 +5,7 @@ date: "10/6/2019"
 output: github_document
 ---
 
-## Setup
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -55,8 +55,9 @@ instacart %>%
   select(order_id, aisle, product_name) %>% 
   group_by(aisle, product_name) %>% 
   summarize(n = n()) %>% 
-  mutate(product_rank = min_rank(product_name))
-  
+  mutate(product_rank = min_rank(desc(n))) %>% 
+  filter(product_rank <= 3) %>% 
+  view()
 
 ```
 
