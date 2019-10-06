@@ -25,7 +25,7 @@ view(head(instacart, n = 50))
 
 The instacart dataset contains 1,384,617 observations and 15 variables. It catalogues instacart orders from October 2017 in New York City. Key variables include order_id (the order identifier), user_id (the customer identifier), product_id (the product name within each order), and order_dow (the day of the week). The first row, for example, is order_id = 1, meaning it was the first order in October 2017, includes (among 7 other items) the item product_name = Bulgarian Yogurt, which was ordered by customer user_id = 112108 on order_dow = 4 (presumably Wednesday). 
 
-## EDA with Instacart Dataset
+### EDA with Instacart Dataset
 
 Counting # of aisles and aisles most commonly ordered from. 
 ```{r}
@@ -41,9 +41,18 @@ There are 134 aisles and the aisle most commonly ordered from is aisle 83 (15060
 Keeping only aisles with n > 10,000, creating a plot that shows the number of items ordered in each aisle. 
 
 ```{r}
+# NOT WORKING
+#instacart %>% 
+ # filter(aisle_id, count(aisle_id) > 10000)
 
 ```
 
+Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
+
+```{r}
+instacart %>% 
+  filter(aisle == c("baking ingredients", "dog food care", "packaged vegetables fruits"))
+```
 
 
 
