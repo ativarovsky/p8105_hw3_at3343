@@ -51,10 +51,16 @@ Make a table showing the three most popular items in each of the aisles “bakin
 
 ```{r}
 instacart %>% 
-  filter(aisle == c("baking ingredients", "dog food care", "packaged vegetables fruits"))
+  filter(aisle == c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
+  select(order_id, aisle, product_name) %>% 
+  group_by(aisle, product_name) %>% 
+  summarize(n = n()) %>% 
+  mutate(product_rank = min_rank(product_name))
+  
+
 ```
 
-
+3 aisles = 31,339 items
 
 
 
