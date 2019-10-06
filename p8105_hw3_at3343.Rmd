@@ -1,0 +1,32 @@
+---
+title: "p8105_hw3_at3343"
+author: "Alice Tivarovsky"
+date: "10/6/2019"
+output: github_document
+---
+# P8105 Homework 3
+
+Setup: 
+
+Instacart Data
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Problem 1
+
+### Instacart Data
+
+Loading data and generating preview: 
+```{r}
+library(p8105.datasets)
+data("instacart")
+view(head(instacart, n = 50))
+```
+
+
+The instacart dataset contains 1,384,617 observations and 15 variables. It catalogues instacart orders from October 2017 in New York City. Key variables include order_id (the order identifier), user_id (the customer identifier), product_id (the product name within each order), and order_dow (the day of the week). The first row, for example, is order_id = 1, meaning it was the first order in October 2017, includes (among 7 other items) the item product_name = Bulgarian Yogurt, which was ordered by customer user_id = 112108 on order_dow = 4 (presumably Wednesday). 
+
+
+
