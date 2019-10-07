@@ -42,9 +42,13 @@ Keeping only aisles with n > 10,000, creating a plot that shows the number of it
 
 ```{r}
 # NOT WORKING
-#instacart %>% 
- # filter(aisle_id, count(aisle_id) > 10000)
-
+instacart %>% 
+  select(aisle_id, product_name) %>% 
+  group_by(aisle_id) %>% 
+  summarize(n = n()) %>% 
+  filter(n > 10000) %>% 
+  ggplot(aes(x = aisle_id, y = n)) + geom_point()
+ 
 ```
 
 Creating a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. 
