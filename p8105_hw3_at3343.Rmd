@@ -102,7 +102,7 @@ Loading BRFSS dataset.
 ```{r}
 library(p8105.datasets)
 data("brfss_smart2010")
-view(brfss_smart2010)
+view(head(brfss_smart2010, n = 100))
 ```
 
 The dataset contains 134,203 observations and 23 variables. 
@@ -110,9 +110,10 @@ The dataset contains 134,203 observations and 23 variables.
 ```{r}
 brfss_smart2010 %>% 
   janitor::clean_names() %>% 
-  rename(state = locationabbr, county = locationdesc) %>% 
-  count(topic = "Overall Health")
-
+  rename(state = locationabbr, county = locationdesc, respondents = sample_size, pct_in_topic = data_value) %>% 
+  filter(topic == "Overall Health") %>% 
+  mutate (response_fac = factor(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
+  
 ```
 
 
