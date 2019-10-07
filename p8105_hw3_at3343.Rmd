@@ -172,6 +172,18 @@ brfss_excellent %>%
   theme_bw()
 ```
 
+Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
+
+```{r}
+brfss_clean %>% 
+  filter(year %in% c(2006,2010), state == "NY") %>% 
+  select(year, state, county, response, data_value) %>% 
+  ggplot(aes(x = response, y = data_value, color = state)) + 
+    geom_boxplot() + 
+    facet_grid(. ~ year)
+  
+  
+```
  
  
 
