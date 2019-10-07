@@ -108,12 +108,37 @@ view(head(brfss_smart2010, n = 100))
 The dataset contains 134,203 observations and 23 variables. 
 
 ```{r}
-brfss_smart2010 %>% 
+brfss_clean = 
+  brfss_smart2010 %>% 
   janitor::clean_names() %>% 
   rename(state = locationabbr, county = locationdesc, respondents = sample_size, pct_in_topic = data_value) %>% 
   filter(topic == "Overall Health") %>% 
-  mutate (response_fac = factor(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
+  mutate(response_fac = factor(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
+
+brfss_clean
   
 ```
 
+Locations by state in 2002: 
+```{r}
+brfss_clean %>% 
+  filter(year == 2002) %>% 
+  select(state, county) %>% 
+  group_by(state) %>% 
+  summarize(n = n_distinct(county)) %>% 
+  filter(n >= 7)
 
+```
+In 2002, there were 6 states with 7 or more locations represented: CT, FL, MA, NC, NJ, and PA. 
+
+Locations by state in 2010: 
+```{r}
+brfss_clean %>% 
+  filter(year == 2010) %>% 
+  select(state, county) %>% 
+  group_by(state) %>% 
+  summarize(n = n_distinct(county)) %>% 
+  filter(n >= 7)
+```
+
+In 2010, there are 14 states with 7 or more locations represented: CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, and WA. 
