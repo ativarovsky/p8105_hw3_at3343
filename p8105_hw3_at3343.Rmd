@@ -111,7 +111,7 @@ The dataset contains 134,203 observations and 23 variables.
 brfss_clean = 
   brfss_smart2010 %>% 
   janitor::clean_names() %>% 
-  rename(state = locationabbr, county = locationdesc, respondents = sample_size, pct_in_topic = data_value) %>% 
+  rename(state = locationabbr, county = locationdesc, respondents = sample_size) %>%
   filter(topic == "Overall Health") %>% 
   mutate(response_fac = factor(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
 
@@ -142,3 +142,16 @@ brfss_clean %>%
 ```
 
 In 2010, there are 14 states with 7 or more locations represented: CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, and WA. 
+
+Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. 
+
+```{r}
+brfss_clean %>% 
+  filter(response == "Excellent") %>% 
+  select(year, state, county, data_value) %>% 
+  drop_na() %>% 
+  group_by(year, state) %>% 
+  summarize(n = mean(data_value))
+```
+
+
