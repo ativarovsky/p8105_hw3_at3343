@@ -41,7 +41,7 @@ There are 134 aisles and the aisle most commonly ordered from is aisle 83 (15060
 Keeping only aisles with n > 10,000, creating a plot that shows the number of items ordered in each aisle. 
 
 ```{r}
-# NOT WORKING
+
 instacart %>% 
   select(aisle_id, product_name) %>% 
   group_by(aisle_id) %>% 
@@ -81,8 +81,26 @@ instacart %>%
   knitr::kable()
 ```
 
-215 rows
 
 
+## Problem 2
+
+
+Loading BRFSS dataset. 
+```{r}
+library(p8105.datasets)
+data("brfss_smart2010")
+view(brfss_smart2010)
+```
+
+The dataset contains 134,203 observations and 23 variables. 
+
+```{r}
+brfss_smart2010 %>% 
+  janitor::clean_names() %>% 
+  rename(state = locationabbr, county = locationdesc) %>% 
+  count(topic = "Overall Health")
+
+```
 
 
