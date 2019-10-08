@@ -191,15 +191,21 @@ brfss_clean %>%
 ```{r}
 accel_data = 
   read.csv("./accel_data.csv") %>% 
-  janitor::clean_names()
-  #rename(c("minute_1":"minute_10") = c("activity_1":"activity_10"))
-  #round(-week, -day_id, -day, digits = 2)
+  janitor::clean_names() %>% 
+  pivot_longer(
+    activity_1:activity_1440,
+    names_to = "minute",
+    names_prefix = "activity_",
+    values_to = "activity"
+  ) %>% 
+  mutate(activity = round(activity, digits = 2)) %>% 
+  mutate(minute = as.numeric(minute))
 
 accel_data
 # change activity.1 to minute_1
-#round to 2 decimals
+# round to 2 decimals
 # add variable to indicate weekend/weekday
-# pivot longer
+
 ```
 
 
