@@ -188,6 +188,8 @@ brfss_clean %>%
  
 # Problem 3
 
+Lodaing and tidying the accel_data dataset. We see that the original dataset has activity for every minute of the day as its own variable. We want to pivot the data so that minutes are observations and activity is the data. We do this using pivot_longer. We then rename activity to minute and round all the activity values to two digits and convert activity to a numeric vector. Finally, we add a variable to indicate whether the line item corresponds to a weekend observation (day = Saturday or Sunday) or a weekday observation (day = Monday- Friday).
+
 ```{r}
 accel_data = 
   read.csv("./accel_data.csv") %>% 
@@ -198,8 +200,10 @@ accel_data =
     names_prefix = "activity_",
     values_to = "activity"
   ) %>% 
+  mutate(activity = as.double(activity)) %>% 
   mutate(activity = round(activity, digits = 2)) %>% 
-  mutate(minute = as.numeric(minute))
+  mutate(minute = as.numeric(minute)) %>% 
+  mutate(wkday_wkend = if_else(day %in% c("Saturday", "Sunday"), "weekend", "weekday"))
 
 accel_data
 # change activity.1 to minute_1
@@ -208,6 +212,7 @@ accel_data
 
 ```
 
+5 weeks, day_id runs 1 - 35
 
  
 
