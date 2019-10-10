@@ -226,13 +226,21 @@ We next plot activity as a function of the minute of each hour of the day.
 
 ```{r}
 accel_data %>% 
-  ggplot(aes(x = minute, y = activity)) +
-  geom_line(aes(group = day_id, color = day)) +
+  mutate(hour = minute %/% 60) %>% 
+ggplot(aes(x = hour, y = activity)) +
+  geom_smooth(aes(group = day_id, color = day)) +
   viridis::scale_color_viridis(name = "Day", 
-    discrete = TRUE
+    discrete = TRUE, 
+    option = "magma"
   ) + 
   theme_bw()
+  
 ```
 
  
+```{r}
+accel_data %>% 
+  mutate
+
+```
 
