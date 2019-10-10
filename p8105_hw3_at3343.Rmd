@@ -188,7 +188,7 @@ brfss_clean %>%
  
 # Problem 3
 
-Lodaing and tidying the accel_data dataset. We see that the original dataset has activity for every minute of the day as its own variable. We want to pivot the data so that minutes are observations and activity is the data. We do this using pivot_longer. We then rename activity to minute and round all the activity values to two digits and convert activity to a numeric vector. Finally, we add a variable to indicate whether the line item corresponds to a weekend observation (day = Saturday or Sunday) or a weekday observation (day = Monday- Friday).
+Lodaing and tidying the accel_data dataset. We see that the original dataset has activity for every minute of the day as its own variable. We want to pivot the data so that minutes are observations (rows) and activity is the data (values). We do this using pivot_longer. We then rename activity to minute and round all the activity values to two digits and convert activity to a numeric vector. Finally, we add a variable to indicate whether the line item corresponds to a weekend observation (day = Saturday or Sunday) or a weekday observation (day = Monday- Friday).
 
 ```{r}
 accel_data = 
@@ -211,15 +211,28 @@ accel_data
 5 weeks, day_id runs 1 - 35
 
 
-Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate accross minutes to create a total activity variable for each day, and create a table showing these totals. Are any trends apparent?
+Now we create a total activity variable for each of the 35 days represented, and create a table of the resulting dataset. 
 
 ```{r}
 accel_data %>% 
-  select(day, day_id, activity) %>% 
-  group_by(day_id) %>% 
-  summarize(n = sum(activity))
+  group_by(day_id, day) %>% 
+  summarize(n = sum(activity)) %>% 
+  knitr::kable()
 ```
 
+It is difficult to detect any trend just looking at the table. We see that in general, though, Saturdays appear to be the least active day. 
+
+We next plot activity as a function of the minute of each hour of the day.  
+
+```{r}
+accel_data %>% 
+  ggplot(aes(x = minute, y = activity)) +
+  geom_line(aes(group = day_id, color = day)) +
+  viridis::scale_color_viridis(name = "Day", 
+    discrete = TRUE
+  ) + 
+  theme_bw()
+```
 
  
 
