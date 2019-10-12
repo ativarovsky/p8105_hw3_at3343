@@ -225,22 +225,14 @@ It is difficult to detect any trend just looking at the table. We see that in ge
 We next plot activity as a function of the minute of each hour of the day.  
 
 ```{r}
-accel_data %>% 
+  accel_data %>% 
   mutate(hour = minute %/% 60) %>% 
-ggplot(aes(x = hour, y = activity)) +
-  geom_smooth(aes(group = day_id, color = day)) +
-  viridis::scale_color_viridis(name = "Day", 
-    discrete = TRUE, 
-    option = "magma"
-  ) + 
-  theme_bw()
+  group_by(day, hour) %>% 
+  summarize(n = sum(activity)) %>% 
+  ggplot(aes(x = hour, y = n)) +
+    geom_line(aes(color = day))
   
 ```
 
  
-```{r}
-accel_data %>% 
-  mutate
-
-```
 
