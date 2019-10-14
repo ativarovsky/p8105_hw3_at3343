@@ -21,6 +21,8 @@ Loading data and generating preview:
 library(p8105.datasets)
 data("instacart")
 view(head(instacart, n = 50))
+
+instacart
 ```
 
 
@@ -106,6 +108,8 @@ Loading BRFSS dataset:
 library(p8105.datasets)
 data("brfss_smart2010")
 view(head(brfss_smart2010, n = 100))
+
+brfss_smart2010
 ```
 
 The dataset contains 134,203 observations and 23 variables. 
@@ -121,7 +125,6 @@ brfss_clean =
   mutate(response_fac = factor(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) 
 
 brfss_clean
-  
 ```
 
 Locations by state in 2002: 
@@ -172,6 +175,12 @@ brfss_excellent %>%
     discrete = TRUE, 
     option = "magma"
   ) + 
+   labs(
+    title = "Excellent Responses in General Health",
+    x = "Year",
+    y = "Proportion Excellent", 
+    caption = "Proportion Excellent indicates the proportion of those who responded with excellent to self-rated general health"
+   ) +
   theme_bw()
 ```
 
@@ -184,7 +193,13 @@ brfss_clean %>%
   select(year, state, county, response, data_value) %>% 
   ggplot(aes(x = response, y = data_value, color = state)) + 
     geom_boxplot() + 
-    facet_grid(. ~ year)
+    facet_grid(. ~ year) +  
+  labs(
+    title = "Distribution of Self-Rated Health in NY",
+    x = "Response",
+    y = "Proportion"
+  ) + 
+  theme_bw()
   
 ```
  
@@ -234,7 +249,9 @@ We next plot activity as a function of the minute of each hour of the day. We ag
   ggplot(aes(x = hour, y = n)) +
     geom_line(aes(color = day)) +
     labs(
-    y = "Activity") +
+    x = "Hour", 
+    y = "Activity",
+    title = "Activity by Hour") +
     scale_y_continuous(
     breaks = c(50000, 100000, 150000, 200000, 250000, 300000)
   )
